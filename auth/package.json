@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
     "test": "jest --watchAll --no-cache",
+    "test:ci": "jest",
     "docker": "docker build -t 7binary/ticketing-auth . && docker push 7binary/ticketing-auth",
     "k8env": "npm run k8env-delete && npm run k8env-create",
     "k8env-delete": "kubectl delete secret jwt-secret",
