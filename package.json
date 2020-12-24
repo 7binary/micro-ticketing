@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "setup": "npm run k:ingress && npm run k:env",
+    "dev": "npm run k8env && skaffold dev",
+    "patch": "kubectl patch svc auth-mongo-srv -p '{\"spec\":{\"externalIPs\":[\"192.168.0.194\"]}}'",
+    "k:srv-delete": "kubectl delete --all services --all-namespaces",
+    "k:ingress": "kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.40.2/deploy/static/provider/cloud/deploy.yaml",
+    "k:ingress-watch": "kubectl get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx --watch",
+    "k:env": "npm run k:env-jwt && npm run k:env-stripe",
+    "k:env-jwt": "npm run k:env-jwt-delete && npm run k:env-jwt-create",
+    "k:env-jwt-delete": "kubectl delete secret jwt-secret --dry-run",
+    "k:env-jwt-create": "kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf",
+    "k:env-stripe": "npm run k:env-stripe-delete && npm run k:env-stripe-create",
+    "k:env-stripe-delete": "kubectl delete secret stripe-secret --dry-run",
+    "k:env-stripe-create": "kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=sk_test_51HzGHKHqD9cBwnPAHJAA0nxz3kwJT9OQ8MXZ1AzREj6mZKDqWfzZnpy4yhyANsFzx292qZn4sx53YuArq6FhT5aT00jJBJqLin"
+  }
+}
