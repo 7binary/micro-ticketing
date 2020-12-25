@@ -13,6 +13,8 @@
     "k:env-stripe": "npm run k:env-stripe-delete && npm run k:env-stripe-create",
     "k:env-stripe-delete": "kubectl delete secret stripe-secret --dry-run",
     "k:env-stripe-create": "kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=sk_test_51HzGHKHqD9cBwnPAHJAA0nxz3kwJT9OQ8MXZ1AzREj6mZKDqWfzZnpy4yhyANsFzx292qZn4sx53YuArq6FhT5aT00jJBJqLin",
-    "do": "doctl kubernetes cluster kubeconfig save 2477091d-8f7d-4fed-a1b6-81c72f02c7b9"
+    "do:setup": "npm run do:switch && npm run do:ingress && npm run k:env",
+    "do:switch": "doctl kubernetes cluster kubeconfig save micro-ticketing",
+    "do:ingress": "kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.42.0/deploy/static/provider/do/deploy.yaml"
   }
 }
