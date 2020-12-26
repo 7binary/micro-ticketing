@@ -6,20 +6,17 @@ import { app } from './app';
 const start = async () => {
   console.log('..starting');
 
-  if (!process.env.JWT_KEY) {
-    throw new Error('JWT_KEY env must be defined!');
-  }
-  if (!process.env.MONGO_URI) {
-    throw new Error('MONGO_URI env must be defined!');
-  }
+  ['JWT_KEY', 'MONGO_URI'].forEach(env => {
+    if (!(env in process.env)) throw new Error(`${env} env must be defined!`);
+  });
 
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGO_URI!, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
-    console.log(`=> Connected to ${process.env.MONGO_URI}`);
+    console.log(`=> Connected to ${process.env.MONGO_URI!}`);
   } catch (err) {
     console.log(err);
   }

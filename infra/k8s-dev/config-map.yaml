@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+data:
+  SERVER_URL_BASE: "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local"
+  NATS_URL: "http://nats-srv:4222"
+  NATS_CLUSTER_ID: ticketing
+  EXPIRE_SECONDS: "60"
+  STRIPE_PUBLIC_KEY: "pk_test_51HzGHKHqD9cBwnPAO5y5NanyT2vaZbt6eJP5c7DroOGrHTixEjNlDfYIbRRvi16Sqv16Rgl2VfV2ynt0gmdL4lIG00gN4Up2j1"
+
