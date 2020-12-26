@@ -18,9 +18,11 @@ function LangingPage({ currentUser, tickets }) {
     <div>
       <div className="d-flex justify-content-between align-items-center">
         <h2>Tickets</h2>
-        <Link href="/tickets/create">
-          <a className="btn btn-primary">Add</a>
-        </Link>
+        {currentUser ? (
+          <Link href="/tickets/create">
+            <a className="btn btn-primary">Add</a>
+          </Link>
+        ) : null}
       </div>
 
       <table className="table">
