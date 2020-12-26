@@ -15,6 +15,17 @@ spec:
       containers:
         - name: client
           image: 7binary/ticketing-client
+          env:
+            - name: SERVER_URL_BASE
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: SERVER_URL_BASE
+            - name: STRIPE_PUBLIC_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: STRIPE_PUBLIC_KEY
 
 ---
 apiVersion: v1

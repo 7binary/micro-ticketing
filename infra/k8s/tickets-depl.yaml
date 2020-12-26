@@ -16,14 +16,20 @@ spec:
         - name: tickets
           image: 7binary/ticketing-tickets
           env:
+            - name: NATS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: NATS_URL
             - name: NATS_CLUSTER_ID
-              value: 'ticketing'
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: NATS_CLUSTER_ID
             - name: NATS_CLIENT_ID
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: NATS_URL
-              value: 'http://nats-srv:4222'
             - name: MONGO_URI
               value: 'mongodb://tickets-mongo-srv:27017/tickets'
             - name: JWT_KEY

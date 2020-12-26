@@ -34,7 +34,7 @@ const OrderShow = ({ order, currentUser }) => {
         token={(token) => doRequest({ token: token.id }).then(() => Router.push('/orders'))}
         amount={order.ticket.price * 100}
         email={currentUser.email}
-        stripeKey="pk_test_51HzGHKHqD9cBwnPAO5y5NanyT2vaZbt6eJP5c7DroOGrHTixEjNlDfYIbRRvi16Sqv16Rgl2VfV2ynt0gmdL4lIG00gN4Up2j1"
+        stripeKey={process.env.STRIPE_PUBLIC_KEY}
       />
       {errors}
     </div>

@@ -13,8 +13,6 @@ import { Order } from '../models/order';
 import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
 import { natsWrapper } from '../nats-wrapper';
 
-const EXPIRATION_WINDOW_SECONDS = 60; // 15 * 60;
-
 const router = express.Router();
 const rules = [
   body('ticketId').not().isEmpty()
@@ -36,8 +34,9 @@ router.post('/api/orders', requireAuth, rules, validateRequest,
       throw new BadRequestError('Ticket is already reserved');
     }
 
+    const expireSeconds = parseInt(process.env.EXPIRE_SECONDS!);
     const expiration = new Date();
-    expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);
+    expiration.setSeconds(expiration.getSeconds() + expireSeconds);
 
     const order = Order.build({
       userId: req.currentUser!.id,
@@ -56,8 +55,8 @@ router.post('/api/orders', requireAuth, rules, validateRequest,
       ticket: {
         id: ticket.id,
         price: ticket.price,
-      }
-    })
+      },
+    });
 
     res.status(201).send({ order });
   });
