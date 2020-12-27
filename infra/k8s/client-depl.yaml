@@ -21,11 +21,11 @@ spec:
                 configMapKeyRef:
                   name: config
                   key: SERVER_URL_BASE
-            - name: STRIPE_PUBLIC_KEY
+            - name: NEXT_PUBLIC_STRIPE_KEY
               valueFrom:
                 configMapKeyRef:
                   name: config
-                  key: STRIPE_PUBLIC_KEY
+                  key: NEXT_PUBLIC_STRIPE_KEY
 
 ---
 apiVersion: v1

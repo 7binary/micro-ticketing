@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
+    "build": "next build",
+    "start": "next start",
     "docker": "docker build -t 7binary/ticketing-client . && docker push 7binary/ticketing-client"
   },
   "keywords": [],

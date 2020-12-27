@@ -2,9 +2,15 @@ import { useState, useEffect } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import useRequest from '../../hooks/use-request';
 import Router from 'next/router';
+import getConfig from 'next/config';
 
 const OrderShow = ({ order, currentUser, stripeKey }) => {
   const [timeLeft, setTimeLeft] = useState(0);
+  const { doRequest, errors } = useRequest({
+    url: '/api/payments',
+    method: 'post',
+    body: { orderId: order.id },
+  });
 
   useEffect(() => {
     const findTimeLeft = () => {
@@ -17,15 +23,13 @@ const OrderShow = ({ order, currentUser, stripeKey }) => {
     return () => clearInterval(interval);
   }, [order]);
 
+  const { publicRuntimeConfig } = getConfig();
+  const { processEnv } = publicRuntimeConfig;
+  console.log('OrderShow.render stripeKey', stripeKey, processEnv);
+
   if (timeLeft < 0) {
     return <div>Order expires</div>;
   }
-
-  const { doRequest, errors } = useRequest({
-    url: '/api/payments',
-    method: 'post',
-    body: { orderId: order.id },
-  });
 
   return (
     <div>
@@ -45,7 +49,8 @@ OrderShow.getInitialProps = async ({ ctx, client }) => {
   const { orderId } = ctx.query;
   const { data } = await client.get(`/api/orders/${orderId}`);
 
-  const stripeKey = process.env.STRIPE_PUBLIC_KEY;
+  const stripeKey = process.env.NEXT_PUBLIC_STRIPE_KEY;
+  console.log('OrderShow.getInitialProps stripeKey', stripeKey);
 
   return { order: data.order, stripeKey };
 };
